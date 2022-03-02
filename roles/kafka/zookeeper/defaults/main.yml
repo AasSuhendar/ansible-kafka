@@ -18,5 +18,6 @@ user_home_directory: '/opt/kafka'
 zookeeper_admin_password: 'zookeeper#Passw0rd'
 
 zookeeper_env:
-   KAFKA_HEAP_OPTS: "-Xms256M -Xmx256M"
+   SIZE_HEAP_OPTS_XMS: "512M"
+   SIZE_HEAP_OPTS_XMX: "512M"
    KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=* -Djava.security.auth.login.config=/opt/kafka/config/jaas_zookeeper.conf"
