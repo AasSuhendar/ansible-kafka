@@ -8,11 +8,9 @@ kafka_admin_password: !vault |
           6133343466356563380a613530646533663330353333626665393235376438336632303138356563
           66663134646530363338313962653139646530636363386566326233653463393030
 
-kafka_env:
+kafka_env_heap:
    SIZE_HEAP_OPTS_XMS: "512M"
    SIZE_HEAP_OPTS_XMX: "512M"
-   KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port=9581 -Dcom.sun.management.jmxremote.port=9581 -Djava.rmi.server.hostname={{ node_ip }}"
-   KAFKA_OPTS: "-Djava.security.auth.login.config=/opt/kafka/config/jaas_kafka_server.conf"
 
 # Default for Block Wipe
 block_device: 'sdb'

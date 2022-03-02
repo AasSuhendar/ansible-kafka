@@ -9,10 +9,9 @@ zookeeper_admin_password: !vault |
           61626634363461373039613639326362303833633539613532613738366262373834626135353365
           3665353731313162653164313464623630336335623532633536
 
-zookeeper_env:
+zookeeper_env_heap:
    SIZE_HEAP_OPTS_XMS: "512M"
    SIZE_HEAP_OPTS_XMX: "512M"
-   KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=* -Djava.security.auth.login.config=/opt/kafka/config/jaas_zookeeper.conf"
 
 # Default for Block Wipe
 block_device: 'sdb'

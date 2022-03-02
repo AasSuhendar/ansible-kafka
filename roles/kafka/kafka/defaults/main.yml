@@ -29,8 +29,10 @@ kafka_conf:
    listener_security_protocol_map: INTERBROKER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
 
 # Default Value for Kafka Env Service
-kafka_env:
+kafka_env_heap:
    SIZE_HEAP_OPTS_XMS: "512M"
    SIZE_HEAP_OPTS_XMX: "512M"
+
+kafka_env_opts:
    KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port={{ kafka_jmx_port }} -Dcom.sun.management.jmxremote.port={{ kafka_jmx_port }} -Djava.rmi.server.hostname={{ node_ip }}"
    KAFKA_OPTS: "-Djava.security.auth.login.config=/opt/kafka/config/jaas_kafka_server.conf"
