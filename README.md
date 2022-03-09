@@ -31,10 +31,27 @@ ansible-vault encrypt_string 'zookeeper#Passw0rd-groupvars-vault' --name 'zookee
 ansible-vault encrypt_string 'kafka#Passw0rd-groupvars-vault' --name 'kafka_admin_password' --vault-password-file ~/.ansible/vault-pass
 ```
 
+You can use other way to create vault variable that store in group_vars 
+```
+ansible-vault encrypt_string 'zookeeper#Passw0rd-groupvars-vault' --name 'zookeeper_admin_password' --ask-vault-pass
+```
+
+```
+ansible-vault encrypt_string 'kafka#Passw0rd-groupvars-vault' --name 'kafka_admin_password' --ask-vault-pass
+```
+
+
 - Run Playbook
 ```
 ansible-playbook --vault-password-file ~/.ansible/vault-pass deploy-kafka.yml
 ```
+
+You can use other way to run playbook
+```
+ansible-playbook --ask-vault-pass deploy-kafka.yml
+```
+
+NB: Prepare secret when use command --ask-vault-pass before.
 
 ## Authors
 
