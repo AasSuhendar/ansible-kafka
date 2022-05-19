@@ -23,10 +23,13 @@ dynamic_external_port: "{{ 9094 + groups.kafkas.index(inventory_hostname) }}"
 # Default Port JMX Kafka
 kafka_jmx_port: 9581
 
+# Default Security Protocol
+kafka_security_protocol: 'SASL_PLAINTEXT'
+
 kafka_conf:
    listeners: INTERBROKER://0.0.0.0:9092,INTERNAL://0.0.0.0:9093,EXTERNAL://0.0.0.0:{{ dynamic_external_port }}
    advertised_listener: INTERBROKER://{{ node_ip }}:9092,INTERNAL://{{ node_ip }}:9093,EXTERNAL://{{ node_name }}:{{ dynamic_external_port }}
-   listener_security_protocol_map: INTERBROKER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+   listener_security_protocol_map: INTERBROKER:{{ kafka_security_protocol }},INTERNAL:{{ kafka_security_protocol }},EXTERNAL:{{ kafka_security_protocol }}
 
 # Default Value for Kafka Env Service
 kafka_env_heap:
