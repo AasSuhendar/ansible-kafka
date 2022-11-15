@@ -20,13 +20,22 @@ kafka_admin_password: 'kafka#Passw0rd'
 # Default Value for Kafka Server Properties
 dynamic_external_port: "{{ 9094 + groups.kafkas.index(inventory_hostname) }}"
 
+# Default Port JMX Kafka
+kafka_jmx_port: 9581
+
+# Default Security Protocol
+kafka_security_protocol: 'SASL_PLAINTEXT'
+
 kafka_conf:
    listeners: INTERBROKER://0.0.0.0:9092,INTERNAL://0.0.0.0:9093,EXTERNAL://0.0.0.0:{{ dynamic_external_port }}
    advertised_listener: INTERBROKER://{{ node_ip }}:9092,INTERNAL://{{ node_ip }}:9093,EXTERNAL://{{ node_name }}:{{ dynamic_external_port }}
-   listener_security_protocol_map: INTERBROKER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+   listener_security_protocol_map: INTERBROKER:{{ kafka_security_protocol }},INTERNAL:{{ kafka_security_protocol }},EXTERNAL:{{ kafka_security_protocol }}
 
 # Default Value for Kafka Env Service
-kafka_env:
-   KAFKA_HEAP_OPTS: "-Xms512M -Xmx512M"
-   KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port=9581 -Dcom.sun.management.jmxremote.port=9581 -Djava.rmi.server.hostname={{ node_ip }}"
+kafka_env_heap:
+   SIZE_HEAP_OPTS_XMS: "512M"
+   SIZE_HEAP_OPTS_XMX: "512M"
+
+kafka_env_opts:
+   KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port={{ kafka_jmx_port }} -Dcom.sun.management.jmxremote.port={{ kafka_jmx_port }} -Djava.rmi.server.hostname={{ node_ip }}"
    KAFKA_OPTS: "-Djava.security.auth.login.config=/opt/kafka/config/jaas_kafka_server.conf"

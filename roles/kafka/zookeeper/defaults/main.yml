@@ -17,6 +17,9 @@ user_home_directory: '/opt/kafka'
 # Default Value for Kafka Admin Password
 zookeeper_admin_password: 'zookeeper#Passw0rd'
 
-zookeeper_env:
-   KAFKA_HEAP_OPTS: "-Xms256M -Xmx256M"
+zookeeper_env_heap:
+   SIZE_HEAP_OPTS_XMS: "512M"
+   SIZE_HEAP_OPTS_XMX: "512M"
+
+zookeeper_env_opts:
    KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=* -Djava.security.auth.login.config=/opt/kafka/config/jaas_zookeeper.conf"
