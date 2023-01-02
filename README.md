@@ -13,8 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 Prerequisite Package :
 ```
-ansible==2.6.20
-cryptography==2.5
+ansible==2.9.27
 ```
 
 Just run ```pip install -r requirements.txt``` for install prerequisite packages
