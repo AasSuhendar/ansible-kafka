@@ -1,0 +1,48 @@
+---
+- name: Create Directory for Zookeeper data and logs
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: kafka
+    group: kafka
+    mode: 0755
+  with_items:
+    - "{{ user_home_directory }}/data/zookeeper/data"
+    - "{{ user_home_directory }}/data/zookeeper/logs"
+
+- name: Create Directory for Kafka data and logs
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: kafka
+    group: kafka
+    mode: 0755
+  with_items:
+    - "{{ user_home_directory }}/data/kafka/logs"
+    - "{{ user_home_directory }}/data/logs"
+
+- name: Create Symlink Directory for Kafka logs
+  file:
+    src: "{{ user_home_directory }}/data/logs"
+    dest: "{{ user_home_directory }}/logs"
+    state: link
+
+- name: Set Permission Chown Kafka Home
+  file:
+    path: "{{ user_home_directory }}"
+    state: directory
+    owner: kafka
+    group: kafka
+    recurse: yes
+
+- name: Create Zookeeper myid File
+  template:
+    src: myid.j2
+    dest: "{{ user_home_directory }}/data/zookeeper/data/myid"
+    mode: 0644
+    owner: kafka
+    group: kafka
+  notify:
+   - Reload SystemD
+   - Restart Kafka Service
+   - Restart Zookeeper Service
