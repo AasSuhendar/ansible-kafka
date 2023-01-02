@@ -1,0 +1,18 @@
+---
+# Default for Node IP
+node_ip: "{{ ansible_default_ipv4.address }}"
+
+# Default for Node Name
+node_name: "{{ ansible_hostname }}"
+
+# Default Value for user zookeeper
+kafka_user: "{{ username_system }}"
+
+# Default Value for group zookeeper
+kafka_group: "{{ group_system }}"
+
+# Default Value for home dir kafka on host
+user_home_directory: '/opt/kafka'
+
+# Default for LVM Volume Group Name
+lvm_vg_name: 'vg-data'
