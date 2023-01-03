@@ -1,0 +1,14 @@
+---
+- name: Creating System Group Kafka
+  group:
+    name: kafka
+    state: absent
+
+
+- name: Creating User Kafka
+  user:
+    name: kafka
+    groups: kafka
+    state: absent
+    home: "{{ user_home_directory }}"
+    shell: "/usr/sbin/nologin"

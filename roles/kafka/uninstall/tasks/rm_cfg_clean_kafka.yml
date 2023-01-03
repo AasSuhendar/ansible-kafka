@@ -1,0 +1,15 @@
+---
+- name: Remove Exsisting Kafka Data
+  shell: "rm -rf /opt/kafka/data/* || true"
+  args:
+    warn: false
+
+- name: Remove Exsisting Kafka Logs Directory
+  file:
+    path: /opt/kafka/logs
+    state: absent
+
+- name: Remove Exsisting Kafka Directory
+  file:
+    path: /opt/kafka
+    state: absent

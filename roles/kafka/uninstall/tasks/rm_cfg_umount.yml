@@ -1,0 +1,13 @@
+---
+- name: Unmount Kafka Data Storage Directory
+  mount:
+    path: /opt/kafka/data
+    state: unmounted
+
+- name: Format Filesystem Kafka Data Storage (LVM)
+  filesystem:
+    fstype: xfs
+    dev: /dev/mapper/vg--data-lv--kafka
+    force: yes
+  when:
+    - enable_lvm == 'true'

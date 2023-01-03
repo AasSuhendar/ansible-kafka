@@ -1,0 +1,29 @@
+---
+- name: Set fallback value for if distribution is not defined
+  set_fact:
+    ansible_distribution: '{{ ansible_lsb["id"] }}'
+  when:
+    - ansible_distribution is not defined
+
+- name: Fail if Operating System is not Supported
+  fail:
+    msg: "Supported Operating System is Debian 64-bit"
+  when:
+    - ansible_distribution != 'Debian'
+    - ansible_architecture != 'x86_64'
+
+- name: Populate service facts
+  service_facts:
+
+- name: Check Required Zookeeper Service is Running
+  fail: 
+    msg: "Required Zookeeper Service is 'running'"
+  when:
+    - ansible_facts.services['zookeeper.service'].state != 'running' or ansible_facts.services['zookeeper.service'].state == 'stopped'
+
+- name: Check Required Kafka Service is Running
+  fail: 
+    msg: "Required Kafka Service is 'running'"
+  when:
+    - ansible_facts.services['kafka.service'].state != 'running' or ansible_facts.services['kafka.service'].state == 'stopped'
+   
