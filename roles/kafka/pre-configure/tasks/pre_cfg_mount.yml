@@ -11,6 +11,28 @@
   shell: zfs set mountpoint="{{ user_home_directory }}"/data {{ zfs_pool_name }}/kafka
   when:
     - enable_zfs == 'true'
+  register: zfs_mount_status
+
+- name: Restart Node Operating System
+  shell: sleep 5 && shutdown -r now "Operating System Upgrade Triggered" 
+  args:
+    warn: false
+  async: 1
+  poll: 0    
+  when:
+    - zfs_mount_status.changed
+    - enable_zfs == 'true'
+
+- name: Wait For Node to Be Ready Operating System
+  wait_for_connection:
+    connect_timeout: 10
+    sleep: 5
+    delay: 5
+    timeout: 600
+  when:
+    - zfs_mount_status.changed
+    - enable_zfs == 'true'
+
 
 - name: Set Kafka Data Storage Mountpoint to Kafka Data Directory (LVM)
   mount:
