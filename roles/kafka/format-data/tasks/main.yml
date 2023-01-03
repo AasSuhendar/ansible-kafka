@@ -3,6 +3,6 @@
 
 - include: fmt_cfg_svc.yml
 
-- include: fmt_cfg_mount.yml
+- include: fmt_cfg_umount.yml
 
 - include: fmt_cfg_kafka_zookeeper.yml
