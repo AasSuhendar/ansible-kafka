@@ -3,9 +3,9 @@
 
 - include: rm_cfg_svc.yml
 
-- include: rm_cfg_clean_kafka.yml
-
 - include: rm_cfg_umount.yml
+
+- include: rm_cfg_clean_kafka.yml
 
 - include: rm_cfg_lvm.yml
 
