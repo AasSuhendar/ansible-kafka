@@ -17,16 +17,16 @@
 - name: Clean ZFS Dataset if 'zfs_dataset_wipe' is true
   command: zfs destroy -fR {{ zfs_pool_name }}/kafka
   when:
-    - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "/kafka") != -1
+    - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "data") != -1
     - zfs_dataset_wipe
 
 - name: Create ZFS Dataset
   command: zfs create {{ zfs_pool_name }}/kafka
   when:
-    - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "/kafka") == -1
+    - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "data") == -1
 
 - name: Set Kafka Data Storage Mountpoint to Kafka Data Directory (ZFS)
-  shell: zfs set mountpoint="{{ user_home_directory }}"/data {{ zfs_pool_name }}/kafka
+  shell: zfs set mountpoint={{ user_home_directory }}/data {{ zfs_pool_name }}/kafka
   register: zfs_mount_status
 
 - name: Restart Node Operating System
