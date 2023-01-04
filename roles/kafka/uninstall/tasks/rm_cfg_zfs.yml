@@ -1,0 +1,25 @@
+---
+- name: Check ZFS Pool Lists
+  command: zpool list
+  register: zfs_pool_lists
+
+- name: Clean ZFS Pool if 'zfs_pool_wipe' is true
+  command: zpool destroy -f {{ zfs_pool_name }}
+  when:
+    - zfs_pool_lists.stdout.find(zfs_pool_name) != -1
+    - zfs_pool_wipe
+
+# - name: Check ZFS Dataset Lists
+#   command: zfs list
+#   register: zfs_dataset_lists
+
+# - name: Clean ZFS Dataset if 'zfs_dataset_wipe' is true
+#   command: zfs destroy -fR {{ zfs_pool_name }}/kafka
+#   when:
+#     - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "/kafka") != -1
+#     - zfs_dataset_wipe
+
+# - name: Create ZFS Dataset
+#   command: zfs create {{ zfs_pool_name }}/kafka
+#   when:
+#     - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "/kafka") == -1

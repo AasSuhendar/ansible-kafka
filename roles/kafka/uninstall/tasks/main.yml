@@ -8,6 +8,12 @@
 - include: rm_cfg_clean_kafka.yml
 
 - include: rm_cfg_lvm.yml
+  when:
+    - enable_lvm == 'true'
+
+- include: rm_cfg_zfs.yml
+  when:
+    - enable_zfs == 'true'
 
 - include: rm_cfg_block.yml
 
