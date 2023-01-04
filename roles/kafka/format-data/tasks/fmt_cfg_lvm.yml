@@ -1,21 +1,14 @@
 ---
 - name: Unmount Kafka Data Storage Directory
   mount:
-    path: /opt/kafka/data
+    path: "{{ user_home_directory }}/data"
     state: unmounted
-
+   
 - name: Format Filesystem Kafka Data Storage (LVM)
   filesystem:
     fstype: xfs
     dev: /dev/mapper/vg--data-lv--kafka
     force: yes
-  when:
-    - enable_lvm == 'true'
-
-# - name: Set Kafka Data Storage Mountpoint to Kafka Data Directory (ZFS)
-#   shell: zfs set mountpoint="{{ user_home_directory }}"/data {{ zfs_pool_name }}/kafka
-#   when:
-#     - enable_zfs == 'true'
 
 - name: Set Kafka Data Storage Mountpoint to Kafka Data Directory (LVM)
   mount:
@@ -25,5 +18,3 @@
     opts: discard,noatime
     state: mounted
     backup: yes
-  when:
-    - enable_lvm == 'true'
