@@ -20,3 +20,5 @@
 - include: rm_cfg_user.yml
 
 - include: rm_cfg_java.yml
+
+- include: rm_cfg_reboot.yml
