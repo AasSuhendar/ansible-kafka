@@ -17,7 +17,7 @@
 - name: Clean ZFS Dataset if 'zfs_dataset_wipe' is true
   command: zfs destroy -fR {{ zfs_pool_name }}/kafka
   when:
-    - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "data") != -1
+    - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "/kafka") != -1
     - zfs_dataset_wipe
 
 - name: Create ZFS Dataset
