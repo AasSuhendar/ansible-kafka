@@ -46,6 +46,3 @@
     timeout: 600
   when:
     - zfs_mount_status.changed
-
-
-
