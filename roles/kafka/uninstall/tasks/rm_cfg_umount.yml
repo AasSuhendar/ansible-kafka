@@ -7,7 +7,7 @@
     - enable_lvm == 'true'
 
 - name: Umount Kafka Data Storage Mountpoint from Kafka Data Directory (ZFS)
-  shell: zfs unmount data/kafka {{ zfs_pool_name }}/kafka
+  shell: zfs unmount {{ zfs_pool_name }}/kafka
   when:
     - enable_zfs == 'true'
   register: zfs_umount_status
