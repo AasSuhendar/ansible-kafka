@@ -1,0 +1,24 @@
+---
+- include: facts.yml
+
+- include: rm_cfg_svc.yml
+
+- include: rm_cfg_umount.yml
+
+- include: rm_cfg_clean_kafka.yml
+
+- include: rm_cfg_lvm.yml
+  when:
+    - enable_lvm == 'true'
+
+- include: rm_cfg_zfs.yml
+  when:
+    - enable_zfs == 'true'
+
+- include: rm_cfg_block.yml
+
+- include: rm_cfg_user.yml
+
+- include: rm_cfg_java.yml
+
+- include: rm_cfg_reboot.yml

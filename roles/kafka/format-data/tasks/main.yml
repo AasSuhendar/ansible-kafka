@@ -1,0 +1,14 @@
+---
+- include: facts.yml
+
+- include: fmt_cfg_svc.yml
+
+- include: fmt_cfg_lvm.yml
+  when:
+    - enable_lvm == 'true'
+
+- include: fmt_cfg_zfs.yml
+  when:
+    - enable_zfs == 'true'
+
+- include: fmt_cfg_kafka_zookeeper.yml

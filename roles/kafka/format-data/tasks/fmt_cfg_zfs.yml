@@ -1,0 +1,48 @@
+---
+- name: Umount Kafka Data Storage Mountpoint from Kafka Data Directory (ZFS)
+  shell: zfs unmount {{ zfs_pool_name }}/kafka
+  when:
+    - enable_zfs == 'true'
+  register: zfs_umount_status
+
+- name: debuging
+  debug:
+    var: zfs_umount_status
+    verbosity: 2
+
+- name: Check ZFS Dataset Lists
+  command: zfs list
+  register: zfs_dataset_lists
+
+- name: Clean ZFS Dataset if 'zfs_dataset_wipe' is true
+  command: zfs destroy -fR {{ zfs_pool_name }}/kafka
+  when:
+    - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "/kafka") != -1
+    - zfs_dataset_wipe
+
+- name: Create ZFS Dataset
+  command: zfs create {{ zfs_pool_name }}/kafka
+  when:
+    - zfs_dataset_lists.stdout.find(zfs_pool_name ~ "data") == -1
+
+- name: Set Kafka Data Storage Mountpoint to Kafka Data Directory (ZFS)
+  shell: zfs set mountpoint={{ user_home_directory }}/data {{ zfs_pool_name }}/kafka
+  register: zfs_mount_status
+
+- name: Restart Node Operating System
+  shell: sleep 5 && shutdown -r now "Operating System Upgrade Triggered" 
+  args:
+    warn: false
+  async: 1
+  poll: 0    
+  when:
+    - zfs_mount_status.changed
+
+- name: Wait For Node to Be Ready Operating System
+  wait_for_connection:
+    connect_timeout: 10
+    sleep: 5
+    delay: 5
+    timeout: 600
+  when:
+    - zfs_mount_status.changed

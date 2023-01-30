@@ -1,0 +1,10 @@
+---
+- name: Stop Kafka Service
+  service:
+    name: kafka
+    state: stopped
+
+- name: Stop Zookeeper Service
+  service:
+    name: zookeeper
+    state: stopped

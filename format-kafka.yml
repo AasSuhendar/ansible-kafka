@@ -1,0 +1,12 @@
+---
+- name: "Gathering Fact" 
+  hosts: all
+  any_errors_fatal: true
+  roles:
+  - role: facts
+
+- name: "Format Kafka Data" 
+  hosts: kafkas:zookeepers
+  any_errors_fatal: true
+  roles:
+  - role: kafka/format-data

@@ -1,0 +1,14 @@
+---
+- name: Remove System Group Kafka
+  group:
+    name: kafka
+    state: absent
+
+
+- name: Remove User Kafka
+  user:
+    name: kafka
+    groups: kafka
+    state: absent
+    home: "{{ user_home_directory }}"
+    shell: "/usr/sbin/nologin"

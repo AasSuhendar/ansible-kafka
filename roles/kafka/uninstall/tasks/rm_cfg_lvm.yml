@@ -1,0 +1,13 @@
+---
+- name: Remove Logical Volume.
+  lvol:
+    vg: "{{ lvm_vg_name }}"
+    lv: "lv-kafka"
+    state: absent
+    force: yes
+
+- name: Remove Volume Group
+  lvg:
+    vg: "{{ lvm_vg_name }}"
+    state: absent
+    force: yes

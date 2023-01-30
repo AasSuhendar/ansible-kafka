@@ -1,0 +1,18 @@
+---
+- name: Unmount Kafka Data Storage Directory
+  mount:
+    path: /opt/kafka/data
+    state: unmounted
+  when:
+    - enable_lvm == 'true'
+
+- name: Umount Kafka Data Storage Mountpoint from Kafka Data Directory (ZFS)
+  shell: zfs unmount {{ zfs_pool_name }}/kafka
+  when:
+    - enable_zfs == 'true'
+  register: zfs_umount_status
+
+- name: debuging
+  debug:
+    var: zfs_umount_status
+    verbosity: 2
